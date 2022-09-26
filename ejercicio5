@@ -1,0 +1,45 @@
+DATA1	EQU		0x20000000
+DATA2	EQU		0x20000004 ;SE CAMBIA DE 4 POSICIONES DE MEMORIA
+DATA3	EQU		0x20000008
+DATA4	EQU		0x20000012
+		AREA	|.text|, CODE,	READONLY,	ALIGN = 2
+		ENTRY
+		EXPORT	__main
+			
+;Realizar las siguientes operaciones (utilizando operaciones no signadas):
+;Declara los registros de 32 bits A1, A2, A3, A4.
+;A1 = 350
+;A2 = 3100
+;A3 = 480
+;A4 = 230
+;A3 = A1 NOR A2
+;A4 = A2 AND A3
+
+
+			
+__main
+		LDR R0, =DATA1 ;0x20000000
+		LDR R1, =DATA2 ;0x20000004 
+		LDR R2, =DATA3 ;0x20000008
+		LDR R3, =DATA4 
+
+LOOP
+		MOV	R4, #350
+		MOV	R5, #3100
+		MOV	R6, #480
+		MOV	R7, #230
+		STR	R4, [R0]
+		STR	R5, [R1]
+		STR R6,	[R2]
+		STR R7, [R3]
+		ORN R7, R4, R5
+		STR R7,	[R2]
+		AND R7, R5, R6
+		STR R7, [R3]
+		
+	
+	
+		B LOOP
+		
+		ALIGN
+		END
